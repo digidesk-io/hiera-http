@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake/gempackagetask'
 
 spec = Gem::Specification.new do |gem|
-    gem.name = "hiera-http"
+    gem.name = "hiera-http-vrsn"
     gem.version = "0.1.0"
     gem.summary = "HTTP backend for Hiera"
     gem.email = "craig@craigdunn.org"
