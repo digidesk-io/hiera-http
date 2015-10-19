@@ -10,6 +10,8 @@ class Hiera
         @http = Net::HTTP.new(@config[:host], @config[:port])
         @http.read_timeout = @config[:http_read_timeout] || 10
         @http.open_timeout = @config[:http_connect_timeout] || 10
+        @path_base = @config[:path_base] || ''
+        @path_suffix = @config[:path_suffix] || ''
 
         @cache = {}
         @cache_timeout = @config[:cache_timeout] || 10
@@ -57,9 +59,9 @@ class Hiera
 
         answer = nil
 
-        paths = @config[:paths].map { |p| Backend.parse_string(p, scope, { 'key' => key }) }
+        paths = @config[:paths].clone
         paths.insert(0, order_override) if order_override
-
+        paths.map! { |p| Backend.parse_string(@path_base + p + @path_suffix, scope, { 'key' => key }) }
 
         paths.each do |path|
 
@@ -178,4 +180,3 @@ class Hiera
     end
   end
 end
-
